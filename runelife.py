@@ -7,7 +7,7 @@ import safygiphy
 
 client = discord.Client()
 g = safygiphy.Giphy()
-DEIN_USERNAME = "DEINE_USER_ID"
+DEIN_USERNAME = "357116804587323394"
 
 minutes = 0
 hour = 0
