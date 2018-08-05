@@ -1,1 +1,1 @@
-Worker: Python runelife.py
+worker: python runelife.py
