@@ -4,9 +4,7 @@ from discord.ext import commands
 import asyncio
 import time
 
-
-Client = discord.Client() #Initialise Client 
-client = commands.Bot(command_prefix = ".") #Initialise client bot
+TOKEN = 'NDc1MzU4OTQ1OTA1NDc1NjA1.DkfBJQ.SEBQqoaeISrBuklQv6Xx2XL3wVM'
 
 @client.event 
 async def on_ready():
@@ -25,4 +23,4 @@ async def clear(ctx, number):
             await asyncio.sleep(1.2) #1.2 second timer so the deleting process can be even
  
     
-client.run("NDc1MzU4OTQ1OTA1NDc1NjA1.DkfBJQ.SEBQqoaeISrBuklQv6Xx2XL3wVM")
+client.run("TOKEN")
