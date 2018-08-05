@@ -10,7 +10,16 @@ client = commands.Bot(command_prefix = "!") #Initialise client bot
 
 @client.event 
 async def on_ready():
-    print("Der Bot ist online und bereit sich zu verbinden mit Discord") 
+    print("Der Bot ist online und bereit sich zu verbinden mit Discord")
+
+@client.command(pass_context=True)
+async def clear(ctx, clear=100)
+    channel = ctx.message.channel
+    message = []
+    async for message in clint.log_from(channel, limit=init(amount) + 1):
+        message.append(message)
+    await client.delete_messages(messages)
+    await client.say('Nachricht Gelöscht.')
 
 @client.event
 async def on_message(message):
