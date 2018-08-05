@@ -1,93 +1,59 @@
 import discord
-import asyncio
-import random
-import requests
-import io
-import safygiphy
+from discord.ext import commands
 
-client = discord.Client()
-g = safygiphy.Giphy()
-DEIN_USERNAME = "357116804587323394"
+bot = commands.Bot(command_prefix='.')
 
-minutes = 0
-hour = 0
-
-@client.event
+@bot.event
 async def on_ready():
     print('Eingeloggt als')
-    print(client.user.name)
-    print(client.user.id)
-    print('-----------')
-    # await client.change_presence(game=discord.Game(name="on grewoss.com"))
+    print(bot.user.name)
+    print(bot.user.id)
+    print('------')
 
+@bot.command()
+async def add(ctx, a: int, b: int):
+    await ctx.send(a+b)
 
-@client.event
-async def on_message(message):
-    if message.content.lower().startswith('?test'):
-        await client.send_message(message.channel, "Test bestanden")
+@bot.command()
+async def multiply(ctx, a: int, b: int):
+    await ctx.send(a*b)
 
-    if message.content.lower().startswith('?coin'): #Coinflip 50/50% chance kopf oder zahl
-        choice = random.randint(1,2)
-        if choice == 1:
-            await client.add_reaction(message, '🌑')
-        if choice == 2:
-            await client.add_reaction(message, '🌕')
+@bot.command()
+async def greet(ctx):
+    await ctx.send(":smiley: :wave: Hallo, Ihr!")
 
-    if message.content.startswith('?game') and message.author.id == DEIN_USERNAME:
-        game = message.content[6:]
-        await client.change_presence(game=discord.Game(name=game))
-        await client.send_message(message.channel, "Ich habe meinen Status zu {0} geaendert".format(game))
+@bot.command()
+async def cat(ctx):
+    await ctx.send("https://media.giphy.com/media/JIX9t2j0ZTN9S/giphy.gif")
 
-    if message.content.startswith('?bild'):
-        response = requests.get("https://media3.giphy.com/media/6C9CMGMFtzzbO/giphy.gif", stream=True)
-        await client.send_file(message.channel, io.BytesIO(response.raw.read()), filename='bild.gif', content='Test Bild.')
+@bot.command()
+async def info(ctx):
+    embed = discord.Embed(title="Cooler Bot.", description="Bester Bot aller zeiten!.", color=0xeee657)
+    
+    # give info about you here
+    embed.add_field(name="Author", value="Stormy")
+    
+    # Shows the number of servers the bot is member of.
+    embed.add_field(name="Server count", value=f"{len(bot.guilds)}")
 
-    if message.content.startswith('?uptime'):
-        await client.send_message(message.channel, "`Ich bin schon {0} stunde/n und {1} minuten online auf {2}. `".format(hour, minutes, message.server))
+    # give users a link to invite thsi bot to their server
+    embed.add_field(name="Invite", value="[Invite link](-)")
 
-    if message.content.startswith('?gif'):
-        gif_tag = message.content[5:]
-        rgif = g.random(tag=str(gif_tag))
-        response = requests.get(
-            str(rgif.get("data", {}).get('image_original_url')), stream=True
-        )
-        await client.send_file(message.channel, io.BytesIO(response.raw.read()), filename='video.gif')
+    await ctx.send(embed=embed)
 
-    if message.content.startswith('?fun'):
-        gif_tag = "fun"
-        rgif = g.random(tag=str(gif_tag))
-        response = requests.get(
-            str(rgif.get("data", {}).get('image_original_url')), stream=True
-        )
-        await client.send_file(message.channel, io.BytesIO(response.raw.read()), filename='video.gif')
+bot.remove_command('help')
 
+@bot.command()
+async def help(ctx):
+    embed = discord.Embed(title="Cooler Bot", description="Cooler Bot, Mit einer Command Liste.:", color=0xeee657)
 
-@client.event
-async def on_member_join(member):
-    serverchannel = member.server.default_channel
-    msg = "Willkommen {0} auf {1}".format(member.mention, member.server.name)
-    await client.send_message(serverchannel, msg)
+    embed.add_field(name="$add X Y", value="Gives the addition of **X** and **Y**", inline=False)
+    embed.add_field(name="$multiply X Y", value="Gives the multiplication of **X** and **Y**", inline=False)
+    embed.add_field(name="$greet", value="Gives a nice greet message", inline=False)
+    embed.add_field(name="$cat", value="Gives a cute cat gif to lighten up the mood.", inline=False)
+    embed.add_field(name="$info", value="Gives a little info about the bot", inline=False)
+    embed.add_field(name="$help", value="Gives this message", inline=False)
 
+    await ctx.send(embed=embed)
 
-@client.event
-async def on_member_remove(member):
-    serverchannel = member.server.default_channel
-    msg = "Bye Bye {0}".format(member.mention)
-    await client.send_message(serverchannel, msg)
-
-
-async def tutorial_uptime():
-    await client.wait_until_ready()
-    global minutes
-    minutes = 0
-    global hour
-    hour = 0
-    while not client.is_closed:
-        await asyncio.sleep(60)
-        minutes += 1
-        if minutes == 60:
-            minutes = 0
-            hour += 1
-
-client.loop.create_task(tutorial_uptime())
-client.run('NDc1MzU4OTQ1OTA1NDc1NjA1.DkfBJQ.SEBQqoaeISrBuklQv6Xx2XL3wVM')
+bot.run('NDc1MzU4OTQ1OTA1NDc1NjA1.DkfBJQ.SEBQqoaeISrBuklQv6Xx2XL3wVM')
