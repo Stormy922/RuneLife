@@ -229,4 +229,4 @@ async def on_message(message):
   elif(message.content.startswith('/')):
     await giphy_command(message)
 
-client.run("NDc1MzU4OTQ1OTA1NDc1NjA1.DkfBJQ.SEBQqoaeISrBuklQv6Xx2XL3wVM")
+bot.run('NDc1MzU4OTQ1OTA1NDc1NjA1.DkfBJQ.SEBQqoaeISrBuklQv6Xx2XL3wVM')
