@@ -18,14 +18,4 @@ async def on_message(message):
         userID = message.author.id
         await client.send_message(message.channel, "<@%s> Pong!" % (userID))
         
-        @client.command(pass_context=True)
-async def clear(ctx, clear=100)
-    channel = ctx.message.channel
-    message = []
-    async for message in clint.log_from(channel, limit=init(amount) + 1):
-        message.append(message)
-    await client.delete_messages(messages)
-    await client.say('Nachricht Gelöscht.')
-    await client.process_commands(messages
-
 client.run("NDc1MzU4OTQ1OTA1NDc1NjA1.DkfBJQ.SEBQqoaeISrBuklQv6Xx2XL3wVM")
