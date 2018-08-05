@@ -20,6 +20,7 @@ async def clear(ctx, clear=100)
         message.append(message)
     await client.delete_messages(messages)
     await client.say('Nachricht Gelöscht.')
+    await client.process_commands(messages
 
 @client.event
 async def on_message(message):
